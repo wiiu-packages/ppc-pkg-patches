@@ -1,0 +1,15 @@
+diff -Naur libjpeg-turbo-1.5.3.old/md5/md5.c libjpeg-turbo-1.5.3/md5/md5.c
+--- libjpeg-turbo-1.5.3.old/md5/md5.c	2017-12-14 05:39:01.000000000 +0100
++++ libjpeg-turbo-1.5.3/md5/md5.c	2018-10-28 16:43:57.128499244 +0100
+@@ -40,6 +40,11 @@
+ #define htole32(x) le32toh(x)
+ #endif
+ 
++#if defined(GEKKO) || defined(__WIIU__)
++#  define htole32(x) __builtin_bswap32 (x)
++#  define le32toh(x) __builtin_bswap32 (x)
++#endif
++
+ static void MD5Transform(unsigned int [4], const unsigned char [64]);
+ 
+ #if (BYTE_ORDER == LITTLE_ENDIAN)
